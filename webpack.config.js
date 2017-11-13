@@ -1,7 +1,10 @@
-// entry -> output
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -19,6 +22,7 @@ module.exports = (env) => {
     entry: ['babel-polyfill', './src/app.js'],
     output: {
       path: path.join(__dirname, 'public', 'dist'),
+      publicPath: '/dist/',
       filename: 'bundle.js',
     },
     module: {
@@ -55,10 +59,33 @@ module.exports = (env) => {
             ],
           }),
         },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                // publicPath: '/images',
+                outputPath: 'images/',
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [
+      new CleanWebpackPlugin(['public'], {
+        exclude: ['index.html'],
+      }),
       CSSExtract,
+      new HtmlWebpackPlugin({
+        filename: '../index.html',
+        template: 'src/index.html',
+        favicon: 'src/images/favicon.png',
+        alwaysWriteToDisk: true,
+      }),
+      // necessary to work with dev-server
+      new HtmlWebpackHarddiskPlugin(),
       new webpack.DefinePlugin({
         'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
         'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
@@ -72,7 +99,7 @@ module.exports = (env) => {
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       historyApiFallback: true,
-      publicPath: '/dist',
+      publicPath: '/dist/',
     },
   };
 };
