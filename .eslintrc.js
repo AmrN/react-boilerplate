@@ -22,5 +22,4 @@ module.exports = {
         "one-var": 0,
         "jsx-a11y/anchor-is-valid": 0
     },
-    
 };
