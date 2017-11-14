@@ -5,7 +5,6 @@ const common = require('./webpack.common')();
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-
 const CSSExtract = new ExtractTextPlugin('styles.css');
 
 module.exports = merge(common, {
@@ -20,6 +19,12 @@ module.exports = merge(common, {
               options: {
                 sourceMap: true,
                 minimize: true,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
               },
             },
             {

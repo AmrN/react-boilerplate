@@ -2,7 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 
+// in production these are set via environment variables (by heroku config:set for example).
 require('dotenv').config({ path: '.env.development' });
+
+// we need to call this after setting up dotenv so that it can read our environment variables.
 const common = require('./webpack.common')();
 
 module.exports = merge(common, {
@@ -19,6 +22,12 @@ module.exports = merge(common, {
           },
           {
             loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
             options: {
               sourceMap: true,
             },
