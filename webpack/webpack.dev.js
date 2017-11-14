@@ -55,8 +55,18 @@ module.exports = merge(common, {
   // devtool: 'eval',
   devServer: {
     contentBase: path.join(rootPath, 'public'),
-    historyApiFallback: true,
+    // historyApiFallback: true,
     publicPath: '/dist/',
+    proxy: {
+      '**': {
+        bypass(req, res, proxyOptions) {
+          if (req.url.match(/^\/admin\/?/)) {
+            return '/admin.html';
+          }
+          return '/index.html';
+        },
+      },
+    },
   },
 });
 

@@ -20,14 +20,20 @@ module.exports = () => {
   };
 
   return {
-    entry: [
-      'babel-polyfill',
-      path.join(rootPath, 'src', 'app.js'),
-    ],
+    entry: {
+      app: [
+        'babel-polyfill',
+        path.join(rootPath, 'src', 'app.js'),
+      ],
+      admin: [
+        'babel-polyfill',
+        path.join(rootPath, 'src', 'admin', 'admin.js'),
+      ],
+    },
     output: {
       path: path.join(rootPath, 'public', 'dist'),
       publicPath: '/dist/',
-      filename: 'bundle.js',
+      filename: '[name].bundle.js',
     },
     module: {
       rules: [
@@ -60,12 +66,24 @@ module.exports = () => {
         template: path.join(rootPath, 'src', 'index.html'),
         favicon: path.join(rootPath, 'src', 'images', 'favicon.png'),
         alwaysWriteToDisk: true,
+        excludeChunks: ['admin'],
+        hash: true,
+      }),
+      new HtmlWebpackPlugin({
+        filename: '../admin.html',
+        template: path.join(rootPath, 'src', 'admin', 'admin.html'),
+        favicon: path.join(rootPath, 'src', 'images', 'favicon.png'),
+        alwaysWriteToDisk: true,
+        chunks: ['common', 'admin'],
         hash: true,
       }),
       // necessary to work with dev-server
       new HtmlWebpackHarddiskPlugin(),
       new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin(definitions),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'common', // Specify the common bundle's name.
+      }),
     ],
   };
 };
