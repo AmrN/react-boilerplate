@@ -7,7 +7,7 @@ exports[`should render LoadingPage correctly 1`] = `
   <img
     alt="loader"
     className="loader__image"
-    src="/images/loader.gif"
+    src="test-file-stub"
   />
 </div>
 `;
