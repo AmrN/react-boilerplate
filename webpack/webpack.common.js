@@ -22,7 +22,7 @@ module.exports = () => {
   return {
     entry: [
       'babel-polyfill',
-      path.join(rootPath, './src/app.js'),
+      path.join(rootPath, 'src', 'app.js'),
     ],
     output: {
       path: path.join(rootPath, 'public', 'dist'),
@@ -57,9 +57,10 @@ module.exports = () => {
       }),
       new HtmlWebpackPlugin({
         filename: '../index.html',
-        template: path.join(rootPath, 'src/index.html'),
-        favicon: path.join(rootPath, 'src/images/favicon.png'),
+        template: path.join(rootPath, 'src', 'index.html'),
+        favicon: path.join(rootPath, 'src', 'images', 'favicon.png'),
         alwaysWriteToDisk: true,
+        hash: true,
       }),
       // necessary to work with dev-server
       new HtmlWebpackHarddiskPlugin(),
