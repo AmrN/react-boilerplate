@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "build:dev": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.prod.js",
-    "dev-server": "webpack-dev-server --hot --open --config webpack.dev.js",
+    "build:dev": "webpack --config webpack/webpack.dev.js",
+    "build:prod": "webpack --config webpack/webpack.prod.js",
+    "dev-server": "webpack-dev-server --hot --open --config webpack/webpack.dev.js",
     "test": "cross-env NODE_ENV=test jest --config=jest.config.json",
     "postinstall": "npm run build:prod"
   },

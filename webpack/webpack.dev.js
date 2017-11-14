@@ -8,6 +8,8 @@ require('dotenv').config({ path: '.env.development' });
 // we need to call this after setting up dotenv so that it can read our environment variables.
 const common = require('./webpack.common')();
 
+const rootPath = path.join(__dirname, '../');
+
 module.exports = merge(common, {
   module: {
     rules: [
@@ -52,7 +54,7 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   // devtool: 'eval',
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(rootPath, 'public'),
     historyApiFallback: true,
     publicPath: '/dist/',
   },
